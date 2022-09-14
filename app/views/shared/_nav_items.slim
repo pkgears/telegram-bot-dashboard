@@ -1,0 +1,11 @@
+p.menu-label Navigation
+ul.menu-list
+  li
+    a href="#{root_path}"
+      span.icon
+        i.fa.fa-home
+      | Home
+    = link_to(destroy_user_session_path, data: {turbo_method: :delete})
+      span.icon
+        i class="fa-solid fa-right-from-bracket"
+      | Sign Out

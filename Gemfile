@@ -53,6 +53,7 @@ gem "devise"
 
 # Bulma css
 gem "bulma-rails", "~> 0.9.3"
+gem "font-awesome-sass", "~> 6.2.0"
 
 # Slim
 gem "slim-rails"

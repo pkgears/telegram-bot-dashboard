@@ -8,15 +8,20 @@ html
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
-  body.page-component
-    nav#navbar.bd-navbar.navbar
-    main#main.container
-      - if notice
-        p class="notification is-success mt-2"
-          = notice
-      - if alert
-        p class="notification is-danger mt-2"
-          = alert
-      = yield
-    footer.footer
+  body
+    div#app
+      nav.hero.is-dark.is-small.has-shadow
+        .hero-body 
+          .container.has-text-centered
+            .title 
+              = link_to "My dashboard", root_path 
+      section#main.main-content.columns.is-fullheight
+        - if user_signed_in?
+          aside.column.is-2.is-narrow-mobile.section
+            = render("shared/nav_items")
+        .container.column.is-10
+          .section
+            = render("shared/alerts") if alert || notice
+            = yield
+      footer.footer
 

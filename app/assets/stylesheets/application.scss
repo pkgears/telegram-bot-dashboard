@@ -25,6 +25,23 @@ html, body, #app {
   min-height: 100%;
 }
 
-#navbar {
-  background-color: cadetblue;
+#main {
+  background-color: #c1bebe1f;
+}
+
+.main-content {
+  min-height: 100%;
+}
+
+nav {
+  position: relative;
+  z-index: 100;
+}
+
+aside {
+  background-color: gainsboro;
+}
+.card-footer-item.is-danger {
+  color: red;
+  background-color: rgba(255,0,0, .25)
 }

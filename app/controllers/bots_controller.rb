@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: %i[ show edit update destroy ]
+  before_action :set_bot, only: %i[ show edit update destroy send_message]
 
   # GET /bots or /bots.json
   def index
@@ -58,6 +58,15 @@ class BotsController < ApplicationController
     end
   end
 
+  def send_message
+    Messages::Sender.call(message_params)
+    redirect_to @bot, notice: "Mensaje enviado correctamente"
+  rescue Telegram::Bot::Exceptions::ResponseError => e
+    redirect_to @bot, alert: e
+  rescue StandardError => e
+    redirect_to @bot, alert: "Ocurrio un error al intentar enviar el mensaje. #{e}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bot
@@ -67,5 +76,9 @@ class BotsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def bot_params
       params.require(:bot).permit(:name, :username, :token)
+    end
+
+    def message_params
+      params.permit(:message, :receiver).merge({token: @bot.token}).as_json.symbolize_keys
     end
 end

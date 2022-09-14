@@ -20,8 +20,8 @@ html
           aside.column.is-2.is-narrow-mobile.section
             = render("shared/nav_items")
         .container.column.is-10
-          .section
+          .section.px-1.pr-3
             = render("shared/alerts") if alert || notice
             = yield
-      footer.footer
+      / footer.footer
 

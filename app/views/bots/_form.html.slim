@@ -1,0 +1,29 @@
+.form-container.box
+  = form_with(model: @bot) do |form|
+    - if @bot.errors.any?
+      div style="color: red"
+        h2 = "#{pluralize(@bot.errors.count, "error")} prohibited this bot from being saved:"
+        ul
+          - @bot.errors.each do |error|
+            li = error.full_message
+
+    div
+      = form.label :name, class: "label"
+      .control
+        = form.text_field :name, class:"input"
+    div
+      = form.label :username, class: "label"
+      .control
+        = form.text_field :username, class:"input"
+
+    div
+      = form.label :token, class: "label"
+      .control
+        = form.text_field :token, class:"input"
+
+    div.mt-3.columns
+      .column
+        = form.submit class:"button is-success"
+      .column.has-text-right
+        = link_to("Show this bot", @bot, class:"button is-link mx-1") if @bot.persisted?
+        = link_to "Back to bots", bots_path, class:"button is-warning mx-1"

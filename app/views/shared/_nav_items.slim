@@ -5,6 +5,10 @@ ul.menu-list
       span.icon
         i.fa.fa-home
       | Home
+    = link_to(bots_path)
+      span.icon
+        i class="fa-solid fa-robot"
+      | Bots
     = link_to(destroy_user_session_path, data: {turbo_method: :delete})
       span.icon
         i class="fa-solid fa-right-from-bracket"

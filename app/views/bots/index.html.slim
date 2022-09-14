@@ -1,0 +1,20 @@
+
+.columns
+  .column
+    h1.title Bots
+  .column.has-text-right.mt-2
+    = link_to "New bot", new_bot_path, class:"button is-primary"
+
+#bots
+  table.table.is-fullwidth
+    thead
+      tr
+        th #
+        th Nombre
+        th Username
+        th Token
+        th
+    - @bots.each do |bot|
+      == render bot
+
+

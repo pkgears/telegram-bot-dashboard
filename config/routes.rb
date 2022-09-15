@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  
+  namespace :api do
+    resources :chats, only: [:show, :create]
+  end
 end

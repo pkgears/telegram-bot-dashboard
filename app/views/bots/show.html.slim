@@ -25,11 +25,10 @@
             i class="fa-regular fa-message"
       .card-content
         = form_with url: send_message_bot_path(@bot) do |f|
-          /= f.hidden_field :token, value: @bot.token
           .field
             = f.label :receiver, "Destinatario:", class:"label", required: true
             .select
-              = f.select :receiver, [["User", -668722729], ["User 2", "54321"]], include_blank: true
+              = f.select :receiver, Chat.all.map{ |chat| [chat.name, chat.chat_id] }, include_blank: true
           .field
             = f.text_area :message, placeholder:"Escribe tu mensaje", rows: 10, class: "textarea", required: true
           .actions.has-text-right

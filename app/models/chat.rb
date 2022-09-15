@@ -7,4 +7,5 @@ class Chat
   field :name, type: String
 
   validates_uniqueness_of :chat_id
+  validates_presence_of :chat_id, :chat_type
 end

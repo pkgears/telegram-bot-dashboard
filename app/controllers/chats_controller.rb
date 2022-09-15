@@ -23,27 +23,19 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(chat_params)
 
-    respond_to do |format|
-      if @chat.save
-        format.html { redirect_to chat_url(@chat), notice: "Chat was successfully created." }
-        format.json { render :show, status: :created, location: @chat }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @chat.errors, status: :unprocessable_entity }
-      end
+    if @chat.save
+      redirect_to chat_url(@chat), notice: "Chat was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /chats/1 or /chats/1.json
   def update
-    respond_to do |format|
-      if @chat.update(chat_params)
-        format.html { redirect_to chat_url(@chat), notice: "Chat was successfully updated." }
-        format.json { render :show, status: :ok, location: @chat }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @chat.errors, status: :unprocessable_entity }
-      end
+    if @chat.update(chat_params)
+      redirect_to chat_url(@chat), notice: "Chat was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -51,10 +43,7 @@ class ChatsController < ApplicationController
   def destroy
     @chat.destroy
 
-    respond_to do |format|
-      format.html { redirect_to chats_url, notice: "Chat was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to chats_url, notice: "Chat was successfully destroyed.", status: :see_other
   end
 
   private

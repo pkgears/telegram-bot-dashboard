@@ -23,27 +23,19 @@ class BotsController < ApplicationController
   def create
     @bot = Bot.new(bot_params)
 
-    respond_to do |format|
-      if @bot.save
-        format.html { redirect_to bot_url(@bot), notice: "Bot was successfully created." }
-        format.json { render :show, status: :created, location: @bot }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bot.errors, status: :unprocessable_entity }
-      end
+    if @bot.save
+      redirect_to bot_url(@bot), notice: "Bot was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /bots/1 or /bots/1.json
   def update
-    respond_to do |format|
-      if @bot.update(bot_params)
-        format.html { redirect_to bot_url(@bot), notice: "Bot was successfully updated." }
-        format.json { render :show, status: :ok, location: @bot }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bot.errors, status: :unprocessable_entity }
-      end
+    if @bot.update(bot_params)
+      redirect_to bot_url(@bot), notice: "Bot was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -51,11 +43,7 @@ class BotsController < ApplicationController
   def destroy
     @bot.destroy
 
-    respond_to do |format|
-      format.html { redirect_to bots_url, notice: "Bot was successfully destroyed." }
-      format.turbo_stream { redirect_to bots_url, status: :see_other,  notice: "Bot was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to bots_url, notice: "Bot was successfully destroyed.", status: :see_other
   end
 
   def send_message

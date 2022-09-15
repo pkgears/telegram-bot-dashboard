@@ -4,6 +4,7 @@ class Chat
 
   field :chat_id, type: Integer
   field :chat_type, type: String
-  field :first_name, type: String
-  field :title, type: String
+  field :name, type: String
+
+  validates_uniqueness_of :chat_id
 end

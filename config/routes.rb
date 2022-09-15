@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   root 'dashboard#index'
   
   devise_for :users
@@ -8,5 +9,6 @@ Rails.application.routes.draw do
       post "send_message"
     end
   end
+
   
 end

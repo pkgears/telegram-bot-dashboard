@@ -1,0 +1,30 @@
+.form-container.box
+  = form_with(model: @chat) do |form|
+    - if @chat.errors.any?
+      div style="color: red"
+        h2 = "#{pluralize(@chat.errors.count, "error")} prohibited this chat from being saved:"
+        ul
+          - @chat.errors.each do |error|
+            li = error.full_message
+    div
+      = form.label :name, class: "label"
+      .control
+        = form.text_field :name, class:"input"
+    .columns
+      .field.column
+        = form.label :chat_id, "Chat ID", class: "label"
+        .control
+          = form.text_field :chat_id, class:"input"
+      
+      .field.column
+        = form.label :chat_type, "Type:", class:"label", required: true
+        .control
+          .select.is-fullwidth
+            = form.select :chat_type, [["Private", "private"], ["Group", "group"]], include_blank: true
+
+    div.mt-3.columns
+      .column
+        = form.submit class:"button is-success"
+      .column.has-text-right
+        = link_to("Show this chat", @chat, class:"button is-link mx-1") if @chat.persisted?
+        = link_to "Back to chats", chats_path, class:"button is-warning mx-1"

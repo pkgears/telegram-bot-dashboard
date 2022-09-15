@@ -1,0 +1,9 @@
+tr id="#{dom_id chat}"
+  td
+    = chat.chat_id
+  td
+    = chat.chat_type.capitalize
+  td 
+    = chat.name
+  td
+    = link_to "Show this chat", chat

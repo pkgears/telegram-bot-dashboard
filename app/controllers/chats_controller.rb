@@ -21,7 +21,7 @@ class ChatsController < ApplicationController
 
   # POST /chats or /chats.json
   def create
-    @chat = Chat.new(chat_params)
+    @chat = Chat.new(chat_create_params)
 
     if @chat.save
       redirect_to chat_url(@chat), notice: "Chat was successfully created."
@@ -32,7 +32,7 @@ class ChatsController < ApplicationController
 
   # PATCH/PUT /chats/1 or /chats/1.json
   def update
-    if @chat.update(chat_params)
+    if @chat.update(chat_update_params)
       redirect_to chat_url(@chat), notice: "Chat was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -53,7 +53,11 @@ class ChatsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def chat_params
-      params.require(:chat).permit(:chat_id, :name, :chat_type)
+    def chat_update_params
+      params.require(:chat).permit(:name)
+    end
+
+    def chat_create_params
+      params.require(:chat).permit(:chat_id, :chat_type, :name)
     end
 end

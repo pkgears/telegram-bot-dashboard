@@ -14,13 +14,13 @@
       .field.column
         = form.label :chat_id, "Chat ID", class: "label"
         .control
-          = form.text_field :chat_id, class:"input"
+          = form.text_field :chat_id, class:"input", disabled: @chat.persisted?
       
       .field.column
         = form.label :chat_type, "Type:", class:"label", required: true
         .control
           .select.is-fullwidth
-            = form.select :chat_type, [["Private", "private"], ["Group", "group"]], include_blank: true
+            = form.select :chat_type, [["Private", "private"], ["Group", "group"]], { include_blank: true }, { disabled: @chat.persisted? } 
 
     div.mt-3.columns
       .column

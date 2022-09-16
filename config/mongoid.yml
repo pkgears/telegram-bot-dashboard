@@ -184,6 +184,11 @@ test:
       hosts:
         - localhost:27017
       options:
+        user: "mongo_dashboard_user"
+        password: "mongo_dashboard_password"
+        auth_source: admin
+        roles:
+          - 'dbOwner'
         read:
           mode: :primary
         max_pool_size: 1

@@ -10,7 +10,7 @@ class Api::ChatsController < Api::ApplicationController
   def create
     @chat = Api::Chats::Creator.call(chat_params)
 
-    if @chat.persisted?
+    if @chat.errors.empty?
       render :show, status: :created, location: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity
@@ -26,6 +26,6 @@ class Api::ChatsController < Api::ApplicationController
 
     # Only allow a list of trusted parameters through.
     def chat_params
-      params.require(:chat).permit(:chat_id, :chat_type, :title, :first_name)
+      params.require(:chat).permit(:id, :type, :title, :first_name)
     end
 end

@@ -13,36 +13,29 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/api/chats", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # Api::Chat. As you add validations to Api::Chat, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+  let(:valid_attributes) { 
+    {
+      id: "12345",
+      type: "private",
+      first_name: "Test name"
+    }
+   }
+  let(:invalid_attributes) { 
+    {
+      first_name: "Test name"
+    } 
   }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+  let(:valid_headers) { {} }
+  let(:text) { "Test message" }
+  let(:message_attributes) {
+    {
+      text: text
+    }
   }
-
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # Api::ChatsController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    {}
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Api::Chat.create! valid_attributes
-      get api_chats_url, headers: valid_headers, as: :json
-      expect(response).to be_successful
-    end
-  end
 
   describe "GET /show" do
     it "renders a successful response" do
-      chat = Api::Chat.create! valid_attributes
+      chat = FactoryBot.create(:chat)
       get api_chat_url(chat), as: :json
       expect(response).to be_successful
     end
@@ -50,78 +43,42 @@ RSpec.describe "/api/chats", type: :request do
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Api::Chat" do
+      it "creates a new Chat and Message" do
         expect {
           post api_chats_url,
-               params: { api_chat: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Api::Chat, :count).by(1)
+               params: { chat: valid_attributes, message: message_attributes }, headers: valid_headers, as: :json
+        }.to change(Chat, :count).by(1)
+      end
+
+      it "creates a new Message for Chat" do
+        post api_chats_url, params: { chat: valid_attributes, message: message_attributes }, headers: valid_headers, as: :json
+        chat = Chat.last       
+        expect(chat.messages.size).to eq(1)
       end
 
       it "renders a JSON response with the new api_chat" do
         post api_chats_url,
-             params: { api_chat: valid_attributes }, headers: valid_headers, as: :json
+             params: { chat: valid_attributes, message: message_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Api::Chat" do
+      it "does not create a new Chat" do
         expect {
           post api_chats_url,
-               params: { api_chat: invalid_attributes }, as: :json
-        }.to change(Api::Chat, :count).by(0)
+               params: { chat: invalid_attributes, message: message_attributes }, as: :json
+        }.to change(Chat, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new api_chat" do
         post api_chats_url,
-             params: { api_chat: invalid_attributes }, headers: valid_headers, as: :json
+             params: { chat: invalid_attributes, message: message_attributes  }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested api_chat" do
-        chat = Api::Chat.create! valid_attributes
-        patch api_chat_url(chat),
-              params: { api_chat: new_attributes }, headers: valid_headers, as: :json
-        chat.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the api_chat" do
-        chat = Api::Chat.create! valid_attributes
-        patch api_chat_url(chat),
-              params: { api_chat: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the api_chat" do
-        chat = Api::Chat.create! valid_attributes
-        patch api_chat_url(chat),
-              params: { api_chat: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested api_chat" do
-      chat = Api::Chat.create! valid_attributes
-      expect {
-        delete api_chat_url(chat), headers: valid_headers, as: :json
-      }.to change(Api::Chat, :count).by(-1)
-    end
-  end
 end

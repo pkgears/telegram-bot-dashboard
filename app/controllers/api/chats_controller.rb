@@ -8,7 +8,7 @@ class Api::ChatsController < Api::ApplicationController
   # POST /api/chats
   # POST /api/chats.json
   def create
-    @chat = Api::Chats::Creator.call(create_chat_params)
+    @chat = Api::Chats::Dispatcher.call(chat_params, message_params)
 
     if @chat.errors.empty?
       render :show, status: :created, location: @chat
@@ -23,15 +23,11 @@ class Api::ChatsController < Api::ApplicationController
       @chat = Chat.find(params[:id])
     end
 
-    def create_chat_params
-      chat_params.merge(message_params)
-    end
-
     def chat_params
-      params.require(:chat).permit(:id, :type, :title, :first_name)
+      params.require(:chat).permit(:id, :type, :title, :first_name, :last_name)
     end
 
     def message_params
-      params.require(:message).permit(:text)
+      params.require(:message).permit(:text, :from, :first_name, :last_name)
     end
 end

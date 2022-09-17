@@ -1,0 +1,10 @@
+.card
+  .card-header
+    p.card-header-title Conversación
+  .card-content
+    #chat-box
+      - if @chat.messages.empty?
+        .title.has-text-centered.is-4
+          | No messages found
+      - @chat.messages.each_with_index do |message, index|
+        = render Chats::Messages::Component.new(message: message, same_origin: same_origin(@chat.messages[index-1], message))

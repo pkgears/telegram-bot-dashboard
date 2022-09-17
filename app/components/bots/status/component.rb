@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Bots::Status::StatusComponent < ViewComponent::Base
+class Bots::Status::Component < ViewComponent::Base
   def initialize(pid: nil)
     @pid = pid
   end

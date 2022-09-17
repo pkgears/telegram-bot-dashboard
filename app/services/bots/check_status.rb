@@ -14,8 +14,7 @@ class Bots::CheckStatus
   private
 
   def check_process
-    return if @bot.pid.blank? || Process.getpgid(@bot.pid)
-    
-    @bot.update(pid: nil)
+    return if @bot.pid.blank?
+    return Process.getpgid(@bot.pid) rescue @bot.update(pid: nil)
   end
 end

@@ -1,5 +1,5 @@
 .columns
-  .column.is-6
+  .column.is-5
     .card
       .card-content
         .media
@@ -19,12 +19,5 @@
         = link_to "Edit this chat", edit_chat_path(@chat), class: "card-footer-item"
         = link_to "Back to chats", chats_path, class: "card-footer-item"
         = link_to "Destroy this chat", @chat, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want delete?" }, class: "card-footer-item is-danger"
-  .column.is-6
-    .card
-      .card-header
-        p.card-header-title Conversación
-      .card-content
-        .chat-box
-          - @chat.messages.each do |message|
-            p
-              = message.text
+  .column.is-7
+    = render Chats::Conversations::Component.new(chat: @chat)

@@ -1,0 +1,10 @@
+div.message class="#{justify_right}"
+  .content
+    - unless @same_origin
+      .from
+        .subtitle.is-6
+          = from
+    .text class="#{text_align}"
+      = @message.text
+    .date
+      = date

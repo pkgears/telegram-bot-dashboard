@@ -1,0 +1,38 @@
+#chat-box {
+  width: 100%;
+  padding: 15px;
+  background-color: antiquewhite;
+  height: 400px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  overflow-anchor: none;
+
+  .message {
+    width: 100%;
+    background: none;
+    display: flex;
+    margin-bottom: 5px;
+    &.justify-right {
+      justify-content: right;
+    }
+    .content {
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 65%;
+      min-width: 30%;
+      margin-bottom: 0px;
+      .from {
+        .subtitle {
+          font-weight: 500;
+          margin-bottom: 0.5em;
+        }
+      }
+      .date {
+        text-align: right;
+        font-size: 11px;
+      }
+    }
+  }
+}
+

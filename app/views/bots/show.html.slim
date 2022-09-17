@@ -10,7 +10,7 @@
           .media-content
             p.title.is-4
               = @bot.name
-              = render(Bots::Status::StatusComponent.new(pid: @bot.pid))
+              = render(Bots::Status::Component.new(pid: @bot.pid))
             p.subtitle.is-6
               = "@#{@bot.username}"
       footer.card-footer

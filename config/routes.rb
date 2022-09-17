@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :bots do
     member do
       post "send_message"
+      post "start"
+      post "stop"
     end
   end
 

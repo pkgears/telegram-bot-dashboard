@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: %i[ show edit update destroy send_message]
+  before_action :set_bot, only: %i[ show edit update destroy send_message start stop]
 
   # GET /bots
   def index
@@ -8,6 +8,8 @@ class BotsController < ApplicationController
 
   # GET /bots/1
   def show
+    Bots::CheckStatus.call(@bot)
+    render :show
   end
 
   # GET /bots/new
@@ -53,6 +55,16 @@ class BotsController < ApplicationController
   #   redirect_to @bot, alert: e
   rescue StandardError => e
     redirect_to @bot, alert: "Ocurrio un error al intentar enviar el mensaje. #{e}"
+  end
+
+  def start
+    Bots::Start.call(@bot)
+    redirect_to @bot, notice: "Algo pasó, revisa la consola"
+  end
+
+  def stop
+    Bots::Stop.call(@bot)
+    redirect_to @bot, notice: "Algo pasó, revisa la consola"
   end
 
   private

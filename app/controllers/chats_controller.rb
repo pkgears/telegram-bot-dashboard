@@ -82,5 +82,3 @@ class ChatsController < ApplicationController
       @bot ||= Bot.find(bot_params[:bot_id])
     end
 end
-
-#Mensaje enviado desde Chat#show

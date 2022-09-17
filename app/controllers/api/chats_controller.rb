@@ -8,7 +8,7 @@ class Api::ChatsController < Api::ApplicationController
   # POST /api/chats
   # POST /api/chats.json
   def create
-    @chat = Api::Chats::Dispatcher.call(chat_params, message_params)
+    @chat = Chats::Dispatcher.call(chat_params, message_params)
 
     if @chat.errors.empty?
       render :show, status: :created, location: @chat

@@ -1,4 +1,4 @@
-class Api::Chats::Dispatcher
+class Chats::Dispatcher
   attr_accessor :chat_params, :message_params
 
   def initialize(chat_params, message_params)
@@ -8,7 +8,7 @@ class Api::Chats::Dispatcher
 
   def call
     @chat = Chats::Creator.call(@chat_params)
-    create_message
+    @message = create_message
 
     @chat
   end

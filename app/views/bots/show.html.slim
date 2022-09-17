@@ -10,11 +10,11 @@
           .media-content
             p.title.is-4
               = @bot.name
+              = render(Bots::Status::StatusComponent.new(pid: @bot.pid))
             p.subtitle.is-6
               = "@#{@bot.username}"
       footer.card-footer
         => link_to "Edit this bot", edit_bot_path(@bot), class: "card-footer-item"
-        /=< link_to "Back to bots", bots_path, class: "card-footer-item"
         - if @bot.pid.present?
           = link_to "Stop", stop_bot_path, class: "card-footer-item", data: { turbo_method: :post }
         - else

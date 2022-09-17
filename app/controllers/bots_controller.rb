@@ -43,6 +43,7 @@ class BotsController < ApplicationController
 
   # DELETE /bots/
   def destroy
+    Bots::Stop.call(@bot)
     @bot.destroy
 
     redirect_to bots_url, notice: "Bot was successfully destroyed.", status: :see_other
@@ -59,12 +60,12 @@ class BotsController < ApplicationController
 
   def start
     Bots::Start.call(@bot)
-    redirect_to @bot, notice: "Algo pasó, revisa la consola"
+    redirect_to @bot, notice: "El bot se inició correctamente"
   end
 
   def stop
     Bots::Stop.call(@bot)
-    redirect_to @bot, notice: "Algo pasó, revisa la consola"
+    redirect_to @bot, notice: "El bot se apagó correctamente"
   end
 
   private

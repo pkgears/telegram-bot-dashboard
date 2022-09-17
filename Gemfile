@@ -61,6 +61,7 @@ gem "slim-rails"
 
 gem "telegram-bot-ruby"
 gem "rest-client", require: false
+gem "view_component"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

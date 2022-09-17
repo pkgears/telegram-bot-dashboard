@@ -1,12 +1,12 @@
 class BotsController < ApplicationController
   before_action :set_bot, only: %i[ show edit update destroy send_message]
 
-  # GET /bots or /bots.json
+  # GET /bots
   def index
     @bots = Bot.all
   end
 
-  # GET /bots/1 or /bots/1.json
+  # GET /bots/1
   def show
   end
 
@@ -19,7 +19,7 @@ class BotsController < ApplicationController
   def edit
   end
 
-  # POST /bots or /bots.json
+  # POST /bots
   def create
     @bot = Bot.new(bot_params)
 
@@ -30,7 +30,7 @@ class BotsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /bots/1 or /bots/1.json
+  # PATCH/PUT /bots/1
   def update
     if @bot.update(bot_params)
       redirect_to bot_url(@bot), notice: "Bot was successfully updated."
@@ -39,7 +39,7 @@ class BotsController < ApplicationController
     end
   end
 
-  # DELETE /bots/1 or /bots/1.json
+  # DELETE /bots/
   def destroy
     @bot.destroy
 
@@ -47,10 +47,10 @@ class BotsController < ApplicationController
   end
 
   def send_message
-    Messages::Sender.call(message_params)
+    Messages::Sender.call(bot: @bot, message_params: message_params)
     redirect_to @bot, notice: "Mensaje enviado correctamente"
-  rescue Telegram::Bot::Exceptions::ResponseError => e
-    redirect_to @bot, alert: e
+  # rescue ::Telegram::Bot::Exceptions::ResponseError => e
+  #   redirect_to @bot, alert: e
   rescue StandardError => e
     redirect_to @bot, alert: "Ocurrio un error al intentar enviar el mensaje. #{e}"
   end
@@ -67,6 +67,6 @@ class BotsController < ApplicationController
     end
 
     def message_params
-      params.permit(:message, :receiver).merge({token: @bot.token}).as_json.symbolize_keys
+      params.permit(:text, :receiver)
     end
 end

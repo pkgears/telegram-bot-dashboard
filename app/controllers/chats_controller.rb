@@ -1,12 +1,12 @@
 class ChatsController < ApplicationController
   before_action :set_chat, only: %i[ show edit update destroy ]
 
-  # GET /chats or /chats.json
+  # GET /chat
   def index
     @chats = Chat.all
   end
 
-  # GET /chats/1 or /chats/1.json
+  # GET /chats/1
   def show
   end
 
@@ -19,7 +19,7 @@ class ChatsController < ApplicationController
   def edit
   end
 
-  # POST /chats or /chats.json
+  # POST /chats
   def create
     @chat = Chat.new(chat_create_params)
 
@@ -30,7 +30,7 @@ class ChatsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /chats/1 or /chats/1.json
+  # PATCH/PUT /chats/1
   def update
     if @chat.update(chat_update_params)
       redirect_to chat_url(@chat), notice: "Chat was successfully updated."
@@ -39,7 +39,7 @@ class ChatsController < ApplicationController
     end
   end
 
-  # DELETE /chats/1 or /chats/1.json
+  # DELETE /chats/1
   def destroy
     @chat.destroy
 

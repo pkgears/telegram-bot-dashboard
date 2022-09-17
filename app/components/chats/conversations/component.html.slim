@@ -8,3 +8,13 @@
           | No messages found
       - @chat.messages.each_with_index do |message, index|
         = render Chats::Messages::Component.new(message: message, same_origin: same_origin(@chat.messages[index-1], message))
+    = form_with url: send_message_chat_path do |f|
+      .field
+        = f.text_area :text, placeholder:"Escribe tu mensaje", rows: 2, class: "textarea", required: true
+      .columns
+        .field.column.is-6
+          = f.label :bot_id, "Enviar como:", class:"label"
+          .select
+            = f.select :bot_id, Bot.all.map{ |bot| [bot.username, bot.id] }, { include_blank: true }, { required: true } 
+        .actions.has-text-right.column.is-6
+          = f.submit "Enviar", class: "button is-success" 

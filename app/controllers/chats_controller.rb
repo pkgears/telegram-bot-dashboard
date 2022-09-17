@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :set_chat, only: %i[ show edit update destroy ]
+  before_action :set_chat, only: %i[ show edit update destroy send_message]
 
   # GET /chat
   def index
@@ -46,6 +46,13 @@ class ChatsController < ApplicationController
     redirect_to chats_url, notice: "Chat was successfully destroyed.", status: :see_other
   end
 
+  def send_message
+    Messages::Sender.call(bot: bot, message_params: message_params)
+    redirect_to @chat, notice: "Mensaje enviado correctamente"
+  rescue StandardError => e
+    redirect_to @chat, alert: "Ocurrio un error al intentar enviar el mensaje. #{e}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chat
@@ -60,4 +67,20 @@ class ChatsController < ApplicationController
     def chat_create_params
       params.require(:chat).permit(:chat_id, :chat_type, :name)
     end
+
+    def message_params
+      params.permit(:text).merge({
+        receiver: @chat.chat_id
+      })
+    end
+
+    def bot_params
+      params.permit(:bot_id)
+    end
+
+    def bot
+      @bot ||= Bot.find(bot_params[:bot_id])
+    end
 end
+
+#Mensaje enviado desde Chat#show

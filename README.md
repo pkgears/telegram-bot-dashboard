@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+- Ruby version: 2.7.4
+- Rails version: 7.0.4
 
-* System dependencies
+```
+  bundle install
+```
 
-* Configuration
+### Run services
+```
+  docker-compose build
+  docker-compose up -d
+```
 
-* Database creation
+### Setup database
+```
+  rails db:create db:migrate
+```
 
-* Database initialization
+### Run application
+```
+  rails s
+```
 
-* How to run the test suite
+### Create a user
+```
+  rails c
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+``` ruby
+  User.create(email: "your-user@email", password: "a-strong-password", password_confirmation: "a-strong-password")
+```
